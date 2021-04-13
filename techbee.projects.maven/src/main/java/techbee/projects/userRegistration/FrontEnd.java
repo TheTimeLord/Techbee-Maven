@@ -2,12 +2,15 @@ package techbee.projects.userRegistration;
 
 import java.util.Scanner;
 
+
 public class FrontEnd {
 	public static void main(String[] args) {
 		
 		boolean keepGoing;
 		Scanner scan = new Scanner(System.in);
 		UserProfileDAO database = new UserProfileDAO();
+		
+		database.connectDB();
 		
 		do {
 			keepGoing = false;
@@ -54,7 +57,7 @@ public class FrontEnd {
 			System.out.print("Would you like to update a user? (y/n): ");
 			if(scan.nextLine().charAt(0) == 'y') {
 				//TODO: handle input mismatch and OOB exceptions
-				System.out.print("Which user would you like to update? (0-" + (database.numUsers()-1) + "): ");
+				System.out.print("Enter Account ID: ");
 				int uid = scan.nextInt();
 				scan.nextLine();
 				
@@ -81,9 +84,12 @@ public class FrontEnd {
 			System.out.print("Would you like to delete a user? (y/n): ");
 			if(scan.nextLine().charAt(0) == 'y') {
 				//TODO: handle input mismatch and OOB exceptions
-				System.out.print("Which user would you like to delete? (0-" + (database.numUsers()-1) + "): ");
+				System.out.print("Enter Account ID: ");
 				int uid = scan.nextInt();
 				scan.nextLine();
+				
+				System.out.println("User deleted:");
+				database.displayUser(uid);
 				
 				database.deleteUser(uid);
 			}
@@ -94,6 +100,7 @@ public class FrontEnd {
 			if(scan.nextLine().charAt(0) == 'y')
 				keepGoing = true;
 		} while(keepGoing);
-		
+	
+		database.closeDB();
 	}
 }
