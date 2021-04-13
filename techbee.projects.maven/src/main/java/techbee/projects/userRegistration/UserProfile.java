@@ -1,4 +1,4 @@
-package techbee.projects.maven;
+package techbee.projects.userRegistration;
 
 public class UserProfile {
 	private String firstName;
