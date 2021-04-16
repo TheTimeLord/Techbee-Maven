@@ -48,7 +48,6 @@ public class WebTest {
 		searchButton.click();
 		Thread.sleep(2000);
 		
-		//NOTE: Target website has inconsistencies, I can only get the first 6 items from the page easily
 		//scroll to bottom
 		scrollDown(chrome);
 		
