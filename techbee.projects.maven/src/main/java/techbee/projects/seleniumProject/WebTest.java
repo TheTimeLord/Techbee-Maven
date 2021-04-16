@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import org.openqa.selenium.JavascriptExecutor;
 
 public class WebTest {
 	public static void main(String[] args) throws InterruptedException {
@@ -48,6 +49,9 @@ public class WebTest {
 		Thread.sleep(2000);
 		
 		//NOTE: Target website has inconsistencies, I can only get the first 6 items from the page easily
+		//scroll to bottom
+		scrollDown(chrome);
+		
 		names = chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[1]/div[1]/a"));
 		prices = chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[2]/div/div/span"));
 		
@@ -90,5 +94,10 @@ public class WebTest {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private static void scrollDown(WebDriver driver) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
 	}
 }
