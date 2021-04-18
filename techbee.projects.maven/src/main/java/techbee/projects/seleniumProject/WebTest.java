@@ -7,12 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import org.openqa.selenium.JavascriptExecutor;
 
 public class WebTest {
 	public static void main(String[] args) throws InterruptedException {
@@ -64,7 +59,6 @@ public class WebTest {
 			    System.out.println("File already exists.");
 			  }
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -83,10 +77,5 @@ public class WebTest {
 			e.printStackTrace();
 		}
 		
-	}
-	
-	private static void scrollDown(WebDriver driver) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
 	}
 }
