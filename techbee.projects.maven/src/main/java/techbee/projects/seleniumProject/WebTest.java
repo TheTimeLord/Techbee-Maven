@@ -18,20 +18,14 @@ public class WebTest {
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver", "/dev/Webdrivers/chromedriver.exe");
 		
-		// Connect to Ebay
-		WebDriver chrome = new ChromeDriver();
-		chrome.get("https://www.ebay.com");
-		
-		WebElement searchBar = chrome.findElement(By.id("gh-ac"));
-		WebElement searchButton = chrome.findElement(By.id("gh-btn"));
-		
-		searchBar.sendKeys("iphone");
-		Thread.sleep(500);
-		searchButton.click();
+		EbayHome ebay = new EbayHome();
+		ebay.connect();
+		ebay.search("iphone");
 
 		// Get the list of names and prices of iphones from Ebay
-		List<WebElement> names = chrome.findElements(By.className("s-item__title"));
-		List<WebElement> prices = chrome.findElements(By.className("s-item__price"));
+		
+		List<WebElement> names = ebay.getElements("class", "s-item__title"); //chrome.findElements(By.className("s-item__title"));
+		List<WebElement> prices = ebay.getElements("class", "s-item__price");//chrome.findElements(By.className("s-item__price"));
 		
 		// Should be the same amount of names as prices, then write them to file
 		if(names.size() != prices.size())
@@ -40,19 +34,16 @@ public class WebTest {
 			writeToFile(names, prices, "ebay.txt");	
 		
 		// Connect to Target
-		chrome.get("https://www.target.com");
-		searchBar = chrome.findElement(By.id("search"));
-		searchBar.sendKeys("iphone");
-		Thread.sleep(300);
-		searchButton = chrome.findElement(By.xpath("/html/body/div[1]/div/div[3]/div[2]/nav/div/form/button[2]"));
-		searchButton.click();
-		Thread.sleep(2000);
+		TargetHome target = new TargetHome();
+		target.connect();
+		target.search("iphone");
 		
 		//scroll to bottom
-		scrollDown(chrome);
-		
-		names = chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[1]/div[1]/a"));
-		prices = chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[2]/div/div/span"));
+		target.scrollDown();
+	
+		// Get new names and prices
+		names = target.getElements("xpath", "//div/div[2]/div/div/div/div[1]/div[1]/a");//chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[1]/div[1]/a"));
+		prices = target.getElements("xpath", "//div/div[2]/div/div/div/div[2]/div/div/span");//chrome.findElements(By.xpath("//div/div[2]/div/div/div/div[2]/div/div/span"));
 		
 		if(names.size() != prices.size())
 			System.out.println("Error, number of names and prices do not match");
@@ -89,7 +80,6 @@ public class WebTest {
 			writer.close();
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
